@@ -5,15 +5,15 @@ Back-end
 
 1.Install dependencies:
 yarn init
-yarn add express cors mysql2 nodemon
+yarn add express cors mysql2 nodemon typescript
 yarn add sequelize sequelize-cli
 
-2.Start the server(Create index.js which is configured with the same name in the package.json and add express code, then set up the start scripts in the package.json).
+2.Start the server(Create index.tsx which is configured with the same name in the package.json and add express code, then set up the start scripts in the package.json).
 
 yarn start
 
 Day 1:
-Add index.js
+Add index.tsx
 Configure the package.json
 1.F:\reactjs\reactfullstackdemo\server> sequelize init
 
