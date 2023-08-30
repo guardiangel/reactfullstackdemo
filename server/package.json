@@ -13,7 +13,7 @@
     "sqlite3": "^5.1.6"
   },
   "scripts": {
-    "start": "nodemon index.ts",
+    "start": "nodemon index.js",
     "test": "echo 'Error: no test specified' && exit 1"
   }
 }
