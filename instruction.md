@@ -3,7 +3,10 @@ a) Front-end:</br>
 
 1.  Change to the client directory and Create the app:
     yarn create react-app . --template typescript
-2.  Start the server
+2.  Add dependencies:
+    yarn add axios
+    yarn add @mui/material @mui/icons-material @emotion/react @emotion/styled
+3.  Start the server
     yarn start
 
 b) Back-end </br>
