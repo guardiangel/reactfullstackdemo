@@ -1,6 +1,6 @@
-This demo include front end and back end.\s\s
-Front-end:\s\s
+This demo include front end and back end.</br>
+Front-end:</br>
 
-Back-end:\s\s
-1.Start the server, change to server directory:\s\s
-yarn start \s\s
+Back-end:</br>
+1.Start the server, change to server directory:</br>
+yarn start </br>
