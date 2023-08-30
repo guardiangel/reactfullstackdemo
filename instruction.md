@@ -24,5 +24,13 @@ Solution: </br>
 Add the installation path of sequelize to the system envrionment path.</br>
 
 Key point:
-After installing sequelize, we initiailze the sequelize using sequelize init,then we can create files in the model folder.
+1.After installing sequelize, we initiailze the sequelize using sequelize init,then we can create files in the model folder. </br>
 each file in this filder stands for a table. </br>
+2.Modify the database connection in the config.json of config folder.</br>
+3.Adjust index.js in the root directory:</br>
+db.sequelize.sync().then(() => {</br>
+<tab>const port = 3001;</br>
+<tab>app.listen(port, () => {</br>
+<tab>console.log("Server listen at " + port);</br>
+});</br>
+});</br>
