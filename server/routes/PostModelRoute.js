@@ -28,7 +28,7 @@ router.post("/getPostById", async (req, resp) => {
 router.post("/createPost", async (req, resp) => {
   const post = req.body;
   const returnResult = await PostTab.create(post);
-  resp.send(returnResult);
+  resp.json(returnResult);
 });
 
 module.exports = router;

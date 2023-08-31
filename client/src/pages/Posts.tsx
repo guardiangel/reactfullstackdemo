@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { PostsMode } from "../interfaces/commonInterface";
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { colorTokens } from "../theme";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Link } from "react-router-dom";
 
 const Posts = () => {
   const theme = useTheme();
@@ -16,57 +18,113 @@ const Posts = () => {
   }, []);
 
   return (
-    <Box bgcolor={colors.grey[100]} height="100vh">
-      {posts?.map((post) => (
-        <Box
-          key={post.id}
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
+    <Box m="5px">
+      <Box
+        m="40px 0 0 0 "
+        height="90vh"
+        sx={{
+          "& .MuiDataGrid-root": {
+            border: "none",
+          },
+          "& .MuiDataGrid-cell": {
+            borderBottom: "none",
+          },
+          //defined in the above columns
+          "& .name-column-cell": {
+            color: colors.redAccent[500],
+          },
+
+          "& .MuiDataGrid-columnHeaders": {
+            backgroundColor: colors.blueAccent[200],
+            borderBottom: "none",
+          },
+          "& .MuiDataGrid-virtualScroller": {
+            backgroundColor: colors.grey[200], //400 or 900 works better
+          },
+          "& .MuiDataGrid-footerContainer": {
+            backgroundColor: colors.blueAccent[200],
+            borderTop: "none",
+          },
+          "& .MuiCheckbox-root": {
+            color: `${colors.greenAccent[100]} !important`,
+          },
+          "& .MuiTablePagination-selectLabel": {
+            fontSize: "16px",
+            color: colors.blueAccent[400],
+          },
+          "& .MuiTablePagination-displayedRows": {
+            fontSize: "16px",
+            color: colors.blueAccent[400],
+          },
+          "& .MuiInputBase-input": {
+            fontSize: "16px",
+            color: colors.blueAccent[400],
+          },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.blueAccent[400]} !important`,
+            fontSize: "18px",
+          },
+        }}
+      >
+        <DataGrid
+          sx={{
+            fontSize: "20px",
+          }}
+          checkboxSelection
+          rows={posts}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 25, page: 0 },
+            },
+          }}
+          slots={{ toolbar: GridToolbar }}
+        />
+        <Link
+          to="/createPost"
+          style={{ fontSize: "28px", color: colors.redAccent[400] }}
         >
-          <Box
-            display="grid"
-            gridTemplateColumns="repeat(2, 1fr)"
-            gridAutoRows="200px"
-            gap="20px"
-            alignItems="center"
-          >
-            <Box
-              gridColumn="span 2"
-              bgcolor={colors.grey[200]}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              flexDirection="column"
-            >
-              <Typography variant="h2" color={colors.primary[400]} mb="20px">
-                {post.title}
-              </Typography>
-              <Typography variant="h5" m="5px 10px 20px">
-                {post.postText}
-              </Typography>
-              <Box bgcolor={colors.grey[200]} display="flex">
-                <Typography variant="h5" m="5px 10px 20px">
-                  {post.username}
-                </Typography>
-                <Typography variant="h5" m="5px 10px 20px">
-                  {post.createdAt.toLocaleString()}
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-      ))}
+          Create New Posts
+        </Link>
+      </Box>
     </Box>
   );
 };
 
-{
-  /* <div key={post.id}>
-          <div>{post.title}</div>
-          <div>{post.postText}</div>
-          <div>{post.createdAt.toLocaleString()}</div>
-        </div> */
-}
+const columns = [
+  {
+    field: "id",
+    headerName: "ID",
+    flex: 0.5,
+  },
+  {
+    field: "title",
+    headerName: "Title",
+    flex: 1,
+    cellClassName: "name-column-cell",
+  },
+  {
+    field: "postText",
+    headerName: "Post Text",
+    flex: 1,
+  },
+
+  {
+    field: "username",
+    headerName: "User Name",
+    flex: 1,
+  },
+
+  {
+    field: "createdAt",
+    headerName: "Create Time",
+    flex: 1,
+  },
+  {
+    field: "updatedAt",
+    headerName: "Update Time",
+    flex: 1,
+  },
+];
 
 export default Posts;

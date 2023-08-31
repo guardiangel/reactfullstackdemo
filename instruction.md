@@ -5,7 +5,7 @@ a) Front-end:</br>
     yarn create react-app . --template typescript
 2.  Add dependencies:
     yarn add axios
-    yarn add @mui/material @mui/icons-material @emotion/react @emotion/styled
+    yarn add @mui/material @mui/icons-material @emotion/react @emotion/styled react-router-dom formic yup @mui/x-data-grid
 3.  Start the server
     yarn start
 
