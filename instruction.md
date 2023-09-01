@@ -58,10 +58,15 @@ Key Point:</br>
    See PostModel.js for more details.</br>
 2. The request in the sequelize is asynchronous by default, needs to add async and await on the request.See PostModelRoute.js for more details.</br>
 
-Day 3:
+Day 3:</br>
 
-1. Create post list
+1. Create post list</br>
 
-Day 4:
+Day 4:</br>
 
-1. Create post detail and add button in the post list page
+1. Create post detail and add button in the post list page</br>
+
+Day 5:</br>
+
+1. Create post associated with comments. See PostModel.js for details.</br>
+2. Create coments for specific post and list them.

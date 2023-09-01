@@ -1,4 +1,4 @@
-This demo include front end and back end.</br>
+This demo includes front end and back end.</br>
 
 1. Front-end:</br>
    1.1 Technology:</br>

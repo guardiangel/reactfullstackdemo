@@ -10,6 +10,9 @@ app.use(express.json());
 const postRouter = require("./routes/PostModelRoute");
 app.use("/posts", postRouter); //transfer the request path "/posts" to the PostsRoutes endpoint.
 
+const commentRouter = require("./routes/CommentModelRoute");
+app.use("/comments", commentRouter);
+
 db.sequelize.sync().then(() => {
   const port = 3001;
   app.listen(port, () => {

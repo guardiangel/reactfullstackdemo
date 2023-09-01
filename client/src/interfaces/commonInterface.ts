@@ -6,3 +6,9 @@ export interface PostsMode {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface CommentMode {
+  id?: number;
+  comments?: string;
+  PostTabId?: number;
+}

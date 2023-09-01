@@ -16,5 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+  PostTab.associate = (models) => {
+    PostTab.hasMany(models.Comment, {
+      onDelete: "cascade",
+    });
+  };
+
   return PostTab;
 };
