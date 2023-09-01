@@ -16,7 +16,8 @@ const Home = () => {
         }}
       >
         Home
-        <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <Link to="/post">Post list</Link>
           <Link to="/createPost">Create New Post</Link>
         </div>
       </div>

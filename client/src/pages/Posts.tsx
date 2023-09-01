@@ -1,15 +1,77 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { PostsMode } from "../interfaces/commonInterface";
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme, Typography, Button } from "@mui/material";
 import { colorTokens } from "../theme";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Posts = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const colors = colorTokens(theme.palette.mode);
   const [posts, setPosts] = useState<PostsMode[]>([]);
+
+  const columns = [
+    {
+      field: "id",
+      headerName: "ID",
+      flex: 0.5,
+    },
+    {
+      field: "title",
+      headerName: "Title",
+      flex: 1,
+      cellClassName: "name-column-cell",
+    },
+    {
+      field: "postText",
+      headerName: "Post Text",
+      flex: 1,
+    },
+
+    {
+      field: "username",
+      headerName: "User Name",
+      flex: 1,
+    },
+
+    {
+      field: "createdAt",
+      headerName: "Create Time",
+      flex: 1,
+    },
+    {
+      field: "updatedAt",
+      headerName: "Update Time",
+      flex: 1,
+    },
+    {
+      field: "Detail", // this field doesn't exist in the PostsMode, just make it up for buttons.
+      headerName: "Operate",
+      flex: 1,
+      renderCell: ({ row: { id } }: PostRow) => {
+        const handleClick = (e: any) => {
+          e.stopPropagation();
+          navigate(`/post/${id}`);
+        };
+
+        return (
+          <Button
+            sx={{ width: "100px", backgroundColor: colors.grey[400] }}
+            onClick={handleClick}
+          >
+            <Typography
+              color={colors.greenAccent[400]}
+              sx={{ ml: "5px", fontSize: "24px" }}
+            >
+              detail
+            </Typography>
+          </Button>
+        );
+      },
+    },
+  ];
 
   useEffect(() => {
     axios.get("http://localhost:3001/posts/getAllPosts").then((res) => {
@@ -91,40 +153,8 @@ const Posts = () => {
   );
 };
 
-const columns = [
-  {
-    field: "id",
-    headerName: "ID",
-    flex: 0.5,
-  },
-  {
-    field: "title",
-    headerName: "Title",
-    flex: 1,
-    cellClassName: "name-column-cell",
-  },
-  {
-    field: "postText",
-    headerName: "Post Text",
-    flex: 1,
-  },
-
-  {
-    field: "username",
-    headerName: "User Name",
-    flex: 1,
-  },
-
-  {
-    field: "createdAt",
-    headerName: "Create Time",
-    flex: 1,
-  },
-  {
-    field: "updatedAt",
-    headerName: "Update Time",
-    flex: 1,
-  },
-];
+interface PostRow {
+  row: PostsMode;
+}
 
 export default Posts;

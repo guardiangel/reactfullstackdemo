@@ -6,6 +6,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
+import PostDetails from "./pages/PostDetails";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -16,8 +17,9 @@ function App() {
           <div className="app">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/post" element={<Posts />} />
               <Route path="/createPost" element={<CreatePost />} />
+              <Route path="/post" element={<Posts />} />
+              <Route path="/post/:id" element={<PostDetails />} />
             </Routes>
           </div>
         </CssBaseline>

@@ -17,7 +17,14 @@ router.get("/getAllPosts", async (req, resp) => {
 
 router.post("/getPostById", async (req, resp) => {
   const post = req.body;
-  const specifiedPost = await PostTab.findAll({
+  //the below statement also works
+  /*  const specifiedPost = await PostTab.findAll({
+    where: {
+      id: post.id,
+    },
+  }); */
+  //const specifiedPost = await PostTab.findByPk(post.id);
+  const specifiedPost = await PostTab.findOne({
     where: {
       id: post.id,
     },
