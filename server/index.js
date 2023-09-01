@@ -13,6 +13,9 @@ app.use("/posts", postRouter); //transfer the request path "/posts" to the Posts
 const commentRouter = require("./routes/CommentModelRoute");
 app.use("/comments", commentRouter);
 
+const userRouter = require("./routes/UserRoute");
+app.use("/user", userRouter);
+
 db.sequelize.sync().then(() => {
   const port = 3001;
   app.listen(port, () => {
