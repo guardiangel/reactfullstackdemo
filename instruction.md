@@ -32,7 +32,7 @@ Question: </br>
    Solution: </br>
    Add the installation path of sequelize to the system envrionment path.</br>
 
-Key point:
+Key point:</br>
 
 1. After installing sequelize, we initiailze the sequelize using sequelize init,then we can create files in the model folder. </br>
    each file in this filder stands for a table. </br>
@@ -45,15 +45,23 @@ Key point:
    });</br>
    });</br>
 
-Day 2:
+Day 2:</br>
 
 1. Create Model and insert record to the table.</br>
 2. See PostModel.js and PostModelRoute.js</br>
 
-Key Point:
+Key Point:</br>
 
 1. When importing the model in the routes, don't refer to the specific files, the example is as follows:</br>
    //Don't refer to the specific file, such as ../models/PostModel guiquansun20230830</br>
    const { PostTab } = require("../models");</br>
    See PostModel.js for more details.</br>
 2. The request in the sequelize is asynchronous by default, needs to add async and await on the request.See PostModelRoute.js for more details.</br>
+
+Day 3:
+
+1. Create post list
+
+Day 4:
+
+1. Create post detail and add button in the post list page
