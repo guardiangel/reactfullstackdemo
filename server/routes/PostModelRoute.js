@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const { validateToken } = require("../middleware/AuathAccessToken");
 
 //Don't refer to the specific file, such as ../models/PostModel guiquansun20230830
-const { PostTab } = require("../models");
+const { PostTab, User } = require("../models");
 
 //handle the get request
 router.get("/", (req, resp) => {
@@ -10,12 +11,12 @@ router.get("/", (req, resp) => {
   resp.send("Hello, world");
 });
 
-router.get("/getAllPosts", async (req, resp) => {
+router.post("/getAllPosts", validateToken, async (req, resp) => {
   const allPosts = await PostTab.findAll();
   resp.send(allPosts);
 });
 
-router.post("/getPostById", async (req, resp) => {
+router.post("/getPostById", validateToken, async (req, resp) => {
   const post = req.body;
   //the below statement also works
   /*  const specifiedPost = await PostTab.findAll({
@@ -32,10 +33,23 @@ router.post("/getPostById", async (req, resp) => {
   resp.send(specifiedPost);
 });
 
-router.post("/createPost", async (req, resp) => {
+router.post("/createPost", validateToken, async (req, resp) => {
   const post = req.body;
-  const returnResult = await PostTab.create(post);
-  resp.json(returnResult);
+
+  const userNameExistFlag = await User.findOne({
+    where: {
+      username: post.username,
+    },
+  });
+
+  if (!userNameExistFlag) {
+    resp
+      .status(201)
+      .send("Couldn't find user based on the username. Please try again.");
+  } else {
+    const returnResult = await PostTab.create(post);
+    resp.status(200).json(returnResult);
+  }
 });
 
 module.exports = router;

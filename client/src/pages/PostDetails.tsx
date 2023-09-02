@@ -17,25 +17,54 @@ const PostDetails = () => {
 
   useEffect(() => {
     axios
-      .post("http://localhost:3001/posts/getPostById", { id: id })
+      .post(
+        "http://localhost:3001/posts/getPostById",
+        { id: id },
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        }
+      )
       .then((res) => {
         setPostDetail(res.data);
       });
     axios
-      .post("http://localhost:3001/comments/getCommentsByPostId", {
-        PostTabId: id,
-      })
+      .post(
+        "http://localhost:3001/comments/getCommentsByPostId",
+        {
+          PostTabId: id,
+        },
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        }
+      )
       .then((res) => {
         setCommetns(res.data);
       });
   }, []);
 
   const addComment = () => {
+    if (newComment === "") {
+      alert("Please enter comments.");
+      return;
+    }
+
     axios
-      .post("http://localhost:3001/comments/createComments", {
-        comments: newComment,
-        PostTabId: id,
-      })
+      .post(
+        "http://localhost:3001/comments/createComments",
+        {
+          comments: newComment,
+          PostTabId: id,
+        },
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        }
+      )
       .then((res) => {
         const commentToAdd = {
           id: res.data.id,
@@ -84,6 +113,7 @@ const PostDetails = () => {
               type="text"
               placeholder="Please enter comments..."
               autoComplete="off"
+              required
               onChange={(e) => setNewComment(e.target.value)}
               style={{ height: "50px", width: "30%" }}
             />

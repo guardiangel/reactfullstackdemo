@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { User } = require("../models");
 const bcrypt = require("bcrypt");
+const { sign } = require("jsonwebtoken");
 
 //register
 router.post("/register", async (req, resp) => {
@@ -44,11 +45,14 @@ router.post("/login", async (req, resp) => {
     resp.status("404").send("User doesn't exist");
   } else {
     bcrypt.compare(password, user.password).then((match) => {
-      console.log(match);
       if (!match) {
         resp.status("201").send("Wrong username and password");
       } else {
-        resp.status("200").send(user);
+        const accessToken = sign(
+          { username: user.username, id: user.id },
+          "accessToken"
+        );
+        resp.status("200").send(accessToken);
       }
     });
   }

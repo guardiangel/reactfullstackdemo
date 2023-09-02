@@ -9,7 +9,7 @@ This demo includes front end and back end.<br/>
 
 2. Back-end:<br/>
    2.1 Techonology:<br/>
-   express/cors/mysql2/nodemon/sequelize/sequelize-cli/bcrypt<br/>
+   express/cors/mysql2/nodemon/sequelize/sequelize-cli/bcrypt/jsonwebtoken<br/>
 
    2.2 Configuration:<br/>
    Modify the setting in the config.json of config directory to connect database.<br/>

@@ -18,7 +18,8 @@ function App() {
         <CssBaseline>
           <div className="app">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Login />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/createPost" element={<CreatePost />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Registration />} />

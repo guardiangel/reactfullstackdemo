@@ -76,9 +76,25 @@ const Posts = () => {
   ];
 
   useEffect(() => {
-    axios.get("http://localhost:3001/posts/getAllPosts").then((res) => {
-      setPosts(res.data);
-    });
+    //acessToken is the third param, so put the empty object in the second position.
+    axios
+      .post(
+        "http://localhost:3001/posts/getAllPosts",
+        {},
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          setPosts(res.data);
+        } else {
+          alert(res.data);
+          navigate("/login");
+        }
+      });
   }, []);
 
   return (

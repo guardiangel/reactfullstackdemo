@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const { Comment } = require("../models");
+const { validateToken } = require("../middleware/AuathAccessToken");
 
-router.post("/getCommentsByPostId", async (req, resp) => {
+router.post("/getCommentsByPostId", validateToken, async (req, resp) => {
   const post = req.body;
   //the below statement also works
   const comments = await Comment.findAll({
@@ -14,7 +15,7 @@ router.post("/getCommentsByPostId", async (req, resp) => {
   resp.send(comments);
 });
 
-router.post("/createComments", async (req, resp) => {
+router.post("/createComments", validateToken, async (req, resp) => {
   const comment = req.body;
   const result = await Comment.create(comment);
   resp.json(result);

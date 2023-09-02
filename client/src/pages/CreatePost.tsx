@@ -13,13 +13,17 @@ const CreatePost = () => {
 
   const handleSubmit = (data: typeof initialValues) => {
     //console.log(data);
-    const result = axios.post("http://localhost:3001/posts/createPost", data);
+    const result = axios.post("http://localhost:3001/posts/createPost", data, {
+      headers: {
+        accessToken: sessionStorage.getItem("accessToken"),
+      },
+    });
     result.then((res) => {
       if (res.status === 200) {
         alert("Add success");
         navigate("/post");
       } else {
-        alert("Something wrong");
+        alert(res.data);
       }
     });
   };
