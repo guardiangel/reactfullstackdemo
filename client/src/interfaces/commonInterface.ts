@@ -5,6 +5,7 @@ export interface PostsMode {
   username: string;
   createdAt: Date;
   updatedAt: Date;
+  UserId: number;
 }
 
 export interface CommentMode {

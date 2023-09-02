@@ -7,6 +7,8 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import PostDetails from "./pages/PostDetails";
+import Login from "./pages/Login";
+import Registration from "./pages/Registration";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -18,6 +20,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/createPost" element={<CreatePost />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Registration />} />
               <Route path="/post" element={<Posts />} />
               <Route path="/post/:id" element={<PostDetails />} />
             </Routes>

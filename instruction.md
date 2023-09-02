@@ -72,3 +72,4 @@ Day 5:<br/>
 1. Create post associated with comments. See PostModel.js for details.<br/>
 2. Create coments for specific post and list them.
 3. User authentication
+4. Registration and login

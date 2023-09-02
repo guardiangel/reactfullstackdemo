@@ -44,8 +44,9 @@ router.post("/login", async (req, resp) => {
     resp.status("404").send("User doesn't exist");
   } else {
     bcrypt.compare(password, user.password).then((match) => {
+      console.log(match);
       if (!match) {
-        resp.send("Wrong username and password");
+        resp.status("201").send("Wrong username and password");
       } else {
         resp.status("200").send(user);
       }

@@ -50,9 +50,11 @@ const Posts = () => {
       field: "Detail", // this field doesn't exist in the PostsMode, just make it up for buttons.
       headerName: "Operate",
       flex: 1,
-      renderCell: ({ row: { id } }: PostRow) => {
+      renderCell: ({ row: { id, UserId } }: PostRow) => {
         const handleClick = (e: any) => {
           e.stopPropagation();
+
+          console.log("id==" + id + ",UserId=" + UserId);
           navigate(`/post/${id}`);
         };
 
