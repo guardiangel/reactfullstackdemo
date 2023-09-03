@@ -1,8 +1,7 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -10,18 +9,21 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import * as yup from "yup";
+import { useTheme } from "@mui/material";
+import { colorTokens } from "../theme";
 
 export default function Login() {
+  const theme = useTheme();
+  const colors = colorTokens(theme.palette.mode);
   const navigate = useNavigate();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-
+  const handleSubmit = (data: any) => {
+    console.log(data);
     axios
       .post("http://localhost:3001/user/login", {
-        username: data.get("username"),
-        password: data.get("password"),
+        username: data.username,
+        password: data.password,
       })
       .then((res) => {
         if (res.status === 200) {
@@ -48,46 +50,102 @@ export default function Login() {
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="username...."
-            name="username"
-            autoComplete="username"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+        <Typography variant="h2">Sign in</Typography>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={(e) => handleSubmit(e)}
+          validationSchema={userSchema}
+        >
+          <Form
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              width: "60%",
+              padding: "20px",
+            }}
           >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item>
-              <Link to="/register">{"Don't have an account? Sign Up"}</Link>
-            </Grid>
+            <ErrorMessage
+              name="username"
+              component="span"
+              style={{ color: colors.redAccent[400] }}
+            />
+            {/*  <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="username"
+              label="User Name"
+              type="text"
+              id="username"
+            /> */}
+            <Field
+              id="username"
+              name="username"
+              placeholder="username...."
+              style={{
+                margin: "0px 0px 20px 0px",
+                height: "50px",
+              }}
+            />
+
+            <ErrorMessage
+              name="password"
+              component="span"
+              style={{ color: colors.redAccent[400] }}
+            />
+
+            {/* <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="password"
+              type="text"
+              id="password"
+            /> */}
+
+            <Field
+              id="password"
+              name="password"
+              placeholder="password...."
+              style={{
+                margin: "0px 0px 20px 0px",
+                height: "50px",
+              }}
+            />
+
+            <div>
+              <button
+                type="submit"
+                style={{
+                  width: "200px",
+                  backgroundColor: colors.greenAccent[400],
+                  height: "50px",
+                  marginBottom: "20px",
+                }}
+              >
+                Login
+              </button>
+            </div>
+          </Form>
+        </Formik>
+        <Grid container>
+          <Grid item>
+            <Link to="/register">{"Don't have an account? Sign Up"}</Link>
           </Grid>
-        </Box>
+        </Grid>
       </Box>
     </Container>
   );
 }
+
+const initialValues = {
+  username: "",
+  password: "",
+};
+
+const userSchema = yup.object().shape({
+  username: yup.string().required("required username"),
+  password: yup.string().required("required password"),
+});
