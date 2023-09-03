@@ -9,6 +9,8 @@ const validateToken = (req, resp, next) => {
 
   try {
     const token = verify(accessToken, "accessToken"); //The second param is defined in the UserRoute.js
+    //console.log(token)// Should be  { username: user.username, id: user.id }, which is set in the UserRoute.js
+    req.user = token;
     //If it's a valid token
     if (token) {
       return next();
