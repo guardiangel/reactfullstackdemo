@@ -23,4 +23,15 @@ router.post("/createComments", validateToken, async (req, resp) => {
   resp.json(result);
 });
 
+router.post("/deleteCommentById", validateToken, async (req, resp) => {
+  const id = req.body.id;
+  const result = await Comment.destroy({
+    where: {
+      id: id,
+    },
+  });
+
+  resp.json(result);
+});
+
 module.exports = router;

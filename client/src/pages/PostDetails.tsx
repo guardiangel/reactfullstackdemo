@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -12,8 +12,10 @@ const PostDetails = () => {
 
   const { id } = useParams();
   const [postDetail, setPostDetail] = useState<PostsMode>();
-  const [comments, setCommetns] = useState<CommentMode[]>([]);
+  const [comments, setComments] = useState<CommentMode[]>([]);
   const [newComment, setNewComment] = useState<string>();
+
+  const commentRef = useRef<any>();
 
   useEffect(() => {
     axios
@@ -42,10 +44,11 @@ const PostDetails = () => {
         }
       )
       .then((res) => {
-        setCommetns(res.data);
+        setComments(res.data);
       });
-  }, []);
+  }, [id]);
 
+  //Add comments
   const addComment = () => {
     if (newComment === "") {
       alert("Please enter comments.");
@@ -71,7 +74,31 @@ const PostDetails = () => {
           comments: res.data.comments,
           PostTabId: res.data.PostTabId,
         };
-        setCommetns([...comments, commentToAdd]);
+        setComments([...comments, commentToAdd]);
+
+        //After adding, clear the field
+        commentRef.current.value = "";
+      });
+  };
+
+  //Delete comments
+  const handleDeleteComment = (id: number | undefined) => {
+    axios
+      .post(
+        "http://localhost:3001/comments/deleteCommentById",
+        {
+          id: id,
+        },
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data === 1) {
+          setComments(comments.filter((c) => c.id !== id));
+        }
       });
   };
 
@@ -104,6 +131,9 @@ const PostDetails = () => {
             {comments?.map((c, index) => (
               <div key={c.id}>
                 {index + 1}:{c.comments}
+                <button onClick={() => handleDeleteComment(c.id)}>
+                  Delete comment
+                </button>
               </div>
             ))}
           </div>
@@ -113,7 +143,7 @@ const PostDetails = () => {
               type="text"
               placeholder="Please enter comments..."
               autoComplete="off"
-              required
+              ref={commentRef}
               onChange={(e) => setNewComment(e.target.value)}
               style={{ height: "50px", width: "30%" }}
             />

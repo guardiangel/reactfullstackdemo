@@ -17,7 +17,7 @@ const Home = () => {
 
   const handleLoginOut = () => {
     dispatch(setLoginState({ loginState: false }));
-    console.log("loginState after loginOut=====" + loginState);
+    sessionStorage.removeItem("accessToken");
   };
 
   return (
@@ -44,8 +44,8 @@ const Home = () => {
           <Link to="/createPost">Create New Post</Link>
           {!loginState && (
             <>
-              <Link to="/login">login</Link>
-              <Link to="/register">registratoin</Link>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Registration</Link>
             </>
           )}
 
@@ -57,7 +57,7 @@ const Home = () => {
                 width: "100px",
               }}
             >
-              Loginout
+              Logout
             </button>
           )}
         </div>
