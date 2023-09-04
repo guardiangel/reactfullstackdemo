@@ -12,11 +12,15 @@ import axios from "axios";
 import * as yup from "yup";
 import { useTheme } from "@mui/material";
 import { colorTokens } from "../theme";
+import { useDispatch } from "react-redux";
+import { setLoginState } from "../reducers/LoginReducerSlice";
 
 export default function Login() {
   const theme = useTheme();
   const colors = colorTokens(theme.palette.mode);
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (data: any) => {
     console.log(data);
@@ -28,6 +32,7 @@ export default function Login() {
       .then((res) => {
         if (res.status === 200) {
           alert("login success.");
+          dispatch(setLoginState({ loginState: true }));
           sessionStorage.setItem("accessToken", res.data);
           navigate("/home");
         } else {
@@ -37,7 +42,7 @@ export default function Login() {
   };
 
   return (
-    <Container component="main" maxWidth="xs" style={{ marginTop: "30%" }}>
+    <Container component="main" maxWidth="xs" style={{ marginTop: "200px" }}>
       <CssBaseline />
       <Box
         sx={{
@@ -65,20 +70,8 @@ export default function Login() {
               padding: "20px",
             }}
           >
-            <ErrorMessage
-              name="username"
-              component="span"
-              style={{ color: colors.redAccent[400] }}
-            />
-            {/*  <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="username"
-              label="User Name"
-              type="text"
-              id="username"
-            /> */}
+            <ErrorMessage name="username" component="span" />
+
             <Field
               id="username"
               name="username"
@@ -89,21 +82,7 @@ export default function Login() {
               }}
             />
 
-            <ErrorMessage
-              name="password"
-              component="span"
-              style={{ color: colors.redAccent[400] }}
-            />
-
-            {/* <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="password"
-              type="text"
-              id="password"
-            /> */}
+            <ErrorMessage name="password" component="span" />
 
             <Field
               id="password"

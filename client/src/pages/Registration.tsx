@@ -35,7 +35,7 @@ export default function Registration() {
   };
 
   return (
-    <Container component="main" maxWidth="xs" style={{ marginTop: "30%" }}>
+    <Container component="main" maxWidth="xs" style={{ marginTop: "200px" }}>
       <CssBaseline />
       <Box
         sx={{
@@ -63,11 +63,7 @@ export default function Registration() {
               padding: "20px",
             }}
           >
-            <ErrorMessage
-              name="username"
-              component="span"
-              style={{ color: colors.redAccent[400] }}
-            />
+            <ErrorMessage name="username" component="span" />
 
             <Field
               id="username"
@@ -79,11 +75,7 @@ export default function Registration() {
               }}
             />
 
-            <ErrorMessage
-              name="password"
-              component="span"
-              style={{ color: colors.redAccent[400] }}
-            />
+            <ErrorMessage name="password" component="span" />
 
             <Field
               id="password"

@@ -2,9 +2,24 @@ import { useTheme } from "@mui/material";
 import { colorTokens } from "../theme";
 import { Link } from "react-router-dom";
 
+import { useDispatch, useSelector } from "react-redux";
+import { setLoginState, LoginState } from "../reducers/LoginReducerSlice";
+
 const Home = () => {
   const theme = useTheme();
   const colors = colorTokens(theme.palette.mode);
+
+  const loginState = useSelector(
+    (state: LoginState) => state.loginStateObject.loginState
+  );
+
+  const dispatch = useDispatch();
+
+  const handleLoginOut = () => {
+    dispatch(setLoginState({ loginState: false }));
+    console.log("loginState after loginOut=====" + loginState);
+  };
+
   return (
     <div style={{ backgroundColor: colors.grey[100], height: "100%" }}>
       <div
@@ -16,11 +31,35 @@ const Home = () => {
         }}
       >
         Home
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+        >
           <Link to="/post">Post list</Link>
           <Link to="/createPost">Create New Post</Link>
-          <Link to="/login">login</Link>
-          <Link to="/register">registratoin</Link>
+          {!loginState && (
+            <>
+              <Link to="/login">login</Link>
+              <Link to="/register">registratoin</Link>
+            </>
+          )}
+
+          {loginState && (
+            <button
+              onClick={handleLoginOut}
+              style={{
+                height: "50px",
+                width: "100px",
+              }}
+            >
+              Loginout
+            </button>
+          )}
         </div>
       </div>
     </div>
