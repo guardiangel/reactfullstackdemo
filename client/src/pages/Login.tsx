@@ -37,7 +37,7 @@ export default function Login() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" style={{ marginTop: "30%" }}>
       <CssBaseline />
       <Box
         sx={{
@@ -147,5 +147,5 @@ const initialValues = {
 
 const userSchema = yup.object().shape({
   username: yup.string().required("required username"),
-  password: yup.string().required("required password"),
+  password: yup.string().min(3).max(25).required("required password"),
 });
