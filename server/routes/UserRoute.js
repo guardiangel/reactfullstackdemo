@@ -52,7 +52,11 @@ router.post("/login", async (req, resp) => {
           { username: user.username, id: user.id },
           "accessToken"
         );
-        resp.status("200").send(accessToken);
+        resp.status("200").send({
+          accessToken: accessToken,
+          userName: username,
+          userId: user.id,
+        });
       }
     });
   }

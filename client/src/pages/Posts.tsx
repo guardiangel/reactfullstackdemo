@@ -160,12 +160,21 @@ const Posts = () => {
           }}
           slots={{ toolbar: GridToolbar }}
         />
-        <Link
-          to="/createPost"
-          style={{ fontSize: "28px", color: colors.redAccent[400] }}
-        >
-          Create New Posts
-        </Link>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <Link
+            to="/createPost"
+            style={{ fontSize: "28px", color: colors.redAccent[400] }}
+          >
+            Create New Posts
+          </Link>
+
+          <Link
+            to="/home"
+            style={{ fontSize: "28px", color: colors.redAccent[400] }}
+          >
+            Home
+          </Link>
+        </div>
       </Box>
     </Box>
   );

@@ -12,4 +12,5 @@ export interface CommentMode {
   id?: number;
   comments?: string;
   PostTabId?: number;
+  username?: string;
 }

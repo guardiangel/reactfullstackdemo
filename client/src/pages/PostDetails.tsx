@@ -44,6 +44,7 @@ const PostDetails = () => {
         }
       )
       .then((res) => {
+        console.log(res.data);
         setComments(res.data);
       });
   }, [id]);
@@ -73,6 +74,7 @@ const PostDetails = () => {
           id: res.data.id,
           comments: res.data.comments,
           PostTabId: res.data.PostTabId,
+          username: res.data.username,
         };
         setComments([...comments, commentToAdd]);
 
@@ -118,8 +120,16 @@ const PostDetails = () => {
           }}
         />
         <div style={{ margin: "15px 15px 15px 50px", fontSize: "28px" }}>
-          <div style={{ textAlign: "center", marginRight: "28%" }}>
+          <div
+            style={{
+              textAlign: "center",
+              marginRight: "28%",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <Link to="/post">Return to post list</Link>
+            <Link to="/home">Return to home</Link>
           </div>
           <div>Title:{postDetail?.title}</div>
           <div>User Name:{postDetail?.username}</div>
@@ -130,10 +140,13 @@ const PostDetails = () => {
           <div>
             {comments?.map((c, index) => (
               <div key={c.id}>
-                {index + 1}:{c.comments}
-                <button onClick={() => handleDeleteComment(c.id)}>
-                  Delete comment
-                </button>
+                {index + 1}:{c.comments} userName:{c.username}
+                {sessionStorage.getItem("userName")}
+                {c.username === sessionStorage.getItem("userName") && (
+                  <button onClick={() => handleDeleteComment(c.id)}>
+                    Delete comment
+                  </button>
+                )}
               </div>
             ))}
           </div>

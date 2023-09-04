@@ -33,7 +33,10 @@ export default function Login() {
         if (res.status === 200) {
           alert("login success.");
           dispatch(setLoginState({ loginState: true }));
-          sessionStorage.setItem("accessToken", res.data);
+
+          sessionStorage.setItem("accessToken", res.data.accessToken);
+          sessionStorage.setItem("userName", res.data.userName);
+          sessionStorage.setItem("userId", res.data.userId);
           navigate("/home");
         } else {
           alert(res.data);
