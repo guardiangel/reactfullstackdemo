@@ -73,3 +73,11 @@ Day 5:<br/>
 2. Create coments for specific post and list them.
 3. User authentication
 4. Registration and login
+
+Day 6:<br/>>
+
+1. Validate token
+
+Day 7: <br/>>
+
+1. Create likes and display different icons based on like it or not.
