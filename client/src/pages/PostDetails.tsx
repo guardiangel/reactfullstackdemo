@@ -17,6 +17,7 @@ const PostDetails = () => {
   const [comments, setComments] = useState<CommentMode[]>([]);
   const [newComment, setNewComment] = useState<string>();
   const [likeFlag, setLikeFlag] = useState<boolean>(false);
+  const [likesNumber, setLikesNumber] = useState(0);
 
   const commentRef = useRef<any>();
 
@@ -32,7 +33,8 @@ const PostDetails = () => {
         }
       )
       .then((res) => {
-        setPostDetail(res.data);
+        setPostDetail(res.data.specifiedPost);
+        setLikesNumber(res.data.num);
       });
 
     //get comments
@@ -146,6 +148,7 @@ const PostDetails = () => {
         if (res.status === 200) {
           alert(res.data);
           setLikeFlag(true);
+          setLikesNumber(likesNumber + 1);
         } else {
           alert(res.data);
         }
@@ -171,6 +174,7 @@ const PostDetails = () => {
         if (res.status === 200) {
           alert("Cancel likes successfully.");
           setLikeFlag(false);
+          setLikesNumber(likesNumber - 1 < 0 ? 0 : likesNumber - 1);
         } else {
           alert(res.data);
         }
@@ -207,7 +211,6 @@ const PostDetails = () => {
           <div>Title:{postDetail?.title}</div>
           <div>User Name:{postDetail?.username}</div>
           <div>Text:{postDetail?.postText}</div>
-
           {likeFlag ? (
             <ThumbUpIcon
               style={{
@@ -228,8 +231,8 @@ const PostDetails = () => {
               }}
               onClick={handleLike}
             />
-          )}
-
+          )}{" "}
+          {likesNumber}
           <div style={{ color: colors.redAccent[400], fontSize: "44px" }}>
             Comment Section:
           </div>

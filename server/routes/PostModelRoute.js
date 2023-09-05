@@ -3,7 +3,7 @@ const router = express.Router();
 const { validateToken } = require("../middleware/AuathAccessToken");
 
 //Don't refer to the specific file, such as ../models/PostModel guiquansun20230830
-const { PostTab, User } = require("../models");
+const { PostTab, User, Like } = require("../models");
 
 //handle the get request
 router.get("/", (req, resp) => {
@@ -30,7 +30,16 @@ router.post("/getPostById", validateToken, async (req, resp) => {
       id: post.id,
     },
   });
-  resp.send(specifiedPost);
+
+  const likes = await Like.findAll({
+    where: {
+      PostTabId: post.id,
+    },
+  });
+
+  console.log("likes====" + likes.length);
+
+  resp.send({ specifiedPost: specifiedPost, num: likes.length });
 });
 
 router.post("/createPost", validateToken, async (req, resp) => {
