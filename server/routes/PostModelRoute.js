@@ -37,8 +37,6 @@ router.post("/getPostById", validateToken, async (req, resp) => {
     },
   });
 
-  console.log("likes====" + likes.length);
-
   resp.send({ specifiedPost: specifiedPost, num: likes.length });
 });
 

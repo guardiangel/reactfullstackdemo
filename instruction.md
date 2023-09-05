@@ -16,6 +16,7 @@ b) Back-end <br/>
    yarn add express cors mysql2 nodemon <br/>
    yarn add sequelize sequelize-cli <br/>
    yarn add bcrypt<br/>
+   yarn add redux-persist<br/>
 
 2. Start the server(Create index.tsx which is configured with the same name in the package.json and add express code, then set up the start scripts in the package.json). <br/>
    yarn start <br/>
@@ -81,3 +82,14 @@ Day 6:<br/>>
 Day 7: <br/>>
 
 1. Create likes and display different icons based on like it or not.
+
+Key point:
+
+1.  Add sessionStorge to the store.tsx of the client directory. the export the below statement:
+    export const persistor = persistStore(store);
+
+        After the user login, we change the unknown requested parameter in the browser, we will be directed to the PageNotFound component, there is a link in the "Page Not Found" component, when we click it, we will come back to the home page, however, the login status will be lost. (I guess the reason is that I changed the parameter, so it equals to use <a> tag outside of the React component.) I change the store.tsx, store the value in the sessionStorage, No matter how to change a requested parameter, we still can get the right login status.<br/>
+
+         We can get it from the Application tab in the browser console.<br/>
+
+         (See the App.tsx for the usage)

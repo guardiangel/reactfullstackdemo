@@ -2,7 +2,7 @@ This demo includes front end and back end.<br/>
 
 1. Front-end:<br/>
    1.1 Technology:<br/>
-   React/MUI/axios/formik/typescript/react-router-dom<br/>
+   React/MUI/axios/formik/typescript/react-router-dom/redux-persist<br/>
    1.2 Start Server:<br/>
    Change to client directory:<br/>
    yarn start<br/>
