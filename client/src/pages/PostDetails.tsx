@@ -5,15 +5,18 @@ import axios from "axios";
 import { CommentMode, PostsMode } from "../interfaces/commonInterface";
 import { useTheme } from "@mui/material";
 import { colorTokens } from "../theme";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 
 const PostDetails = () => {
   const theme = useTheme();
   const colors = colorTokens(theme.palette.mode);
 
-  const { id } = useParams();
+  const { id } = useParams(); //this is post id
   const [postDetail, setPostDetail] = useState<PostsMode>();
   const [comments, setComments] = useState<CommentMode[]>([]);
   const [newComment, setNewComment] = useState<string>();
+  const [likeFlag, setLikeFlag] = useState<boolean>(false);
 
   const commentRef = useRef<any>();
 
@@ -31,6 +34,8 @@ const PostDetails = () => {
       .then((res) => {
         setPostDetail(res.data);
       });
+
+    //get comments
     axios
       .post(
         "http://localhost:3001/comments/getCommentsByPostId",
@@ -46,6 +51,25 @@ const PostDetails = () => {
       .then((res) => {
         console.log(res.data);
         setComments(res.data);
+      });
+
+    //get likes
+    axios
+      .post(
+        "http://localhost:3001/likes/getLikes",
+        { PostTabId: id },
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        }
+      )
+      .then((res) => {
+        const like = res.data;
+        console.log("like===" + like);
+        if (like) {
+          setLikeFlag(true);
+        }
       });
   }, [id]);
 
@@ -104,6 +128,55 @@ const PostDetails = () => {
       });
   };
 
+  //handle likes
+  const handleLike = () => {
+    axios
+      .post(
+        "http://localhost:3001/likes/createLikes",
+        {
+          PostTabId: id,
+        },
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          alert(res.data);
+          setLikeFlag(true);
+        } else {
+          alert(res.data);
+        }
+      });
+  };
+
+  //cancel likes
+  const cancelLike = () => {
+    axios
+      .post(
+        "http://localhost:3001/likes/cancelLikes",
+        {
+          PostTabId: id,
+        },
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.status === 200) {
+          alert("Cancel likes successfully.");
+          setLikeFlag(false);
+        } else {
+          alert(res.data);
+        }
+      });
+  };
+
   return (
     <div style={{ backgroundColor: colors.grey[100], height: "100vh" }}>
       <div
@@ -134,6 +207,29 @@ const PostDetails = () => {
           <div>Title:{postDetail?.title}</div>
           <div>User Name:{postDetail?.username}</div>
           <div>Text:{postDetail?.postText}</div>
+
+          {likeFlag ? (
+            <ThumbUpIcon
+              style={{
+                height: "50px",
+                width: "50px",
+                cursor: "pointer",
+                color: colors.redAccent[400],
+              }}
+              onClick={cancelLike}
+            />
+          ) : (
+            <ThumbUpOffAltIcon
+              style={{
+                height: "50px",
+                width: "50px",
+                cursor: "pointer",
+                color: colors.redAccent[400],
+              }}
+              onClick={handleLike}
+            />
+          )}
+
           <div style={{ color: colors.redAccent[400], fontSize: "44px" }}>
             Comment Section:
           </div>
@@ -141,7 +237,6 @@ const PostDetails = () => {
             {comments?.map((c, index) => (
               <div key={c.id}>
                 {index + 1}:{c.comments} userName:{c.username}
-                {sessionStorage.getItem("userName")}
                 {c.username === sessionStorage.getItem("userName") && (
                   <button onClick={() => handleDeleteComment(c.id)}>
                     Delete comment

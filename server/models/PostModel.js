@@ -22,5 +22,11 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  PostTab.associate = (models) => {
+    PostTab.hasMany(models.Like, {
+      onDelete: "cascade",
+    });
+  };
+
   return PostTab;
 };
