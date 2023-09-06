@@ -1,6 +1,7 @@
 This demo includes front end and back end.<br/>
 
 ![Alt text](image.png)
+![Alt text](image-1.png)
 
 1. Front-end:<br/>
    1.1 Technology:<br/>
