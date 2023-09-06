@@ -10,6 +10,7 @@ import PostDetails from "./pages/PostDetails";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import PageNotFound from "./pages/PageNotFound";
+import Profile from "./pages/Profile";
 import { Provider } from "react-redux";
 import { store, persistor } from "./utils/store";
 import { PersistGate } from "redux-persist/integration/react";
@@ -30,6 +31,7 @@ function App() {
                   <Route path="/register" element={<Registration />} />
                   <Route path="/post" element={<Posts />} />
                   <Route path="/post/:id" element={<PostDetails />} />
+                  <Route path="/profile/:userId" element={<Profile />} />
                   <Route path="*" element={<PageNotFound />} />
                 </Routes>
               </div>

@@ -54,7 +54,6 @@ const Posts = () => {
         const handleClick = (e: any) => {
           e.stopPropagation();
 
-          console.log("id==" + id + ",UserId=" + UserId);
           navigate(`/post/${id}`);
         };
 

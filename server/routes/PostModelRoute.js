@@ -11,9 +11,19 @@ router.get("/", (req, resp) => {
   resp.send("Hello, world");
 });
 
-router.post("/getAllPosts", validateToken, async (req, resp) => {
+router.post("/getAllPosts", async (req, resp) => {
   const allPosts = await PostTab.findAll();
   resp.send(allPosts);
+});
+
+router.get("/getAllPostsByUserId/:userId", async (req, resp) => {
+  const userId = req.params.userId;
+  const allPosts = await PostTab.findAll({
+    where: {
+      UserId: userId,
+    },
+  });
+  resp.status(200).send(allPosts);
 });
 
 router.post("/getPostById", validateToken, async (req, resp) => {
@@ -43,17 +53,18 @@ router.post("/getPostById", validateToken, async (req, resp) => {
 router.post("/createPost", validateToken, async (req, resp) => {
   const post = req.body;
 
-  const userNameExistFlag = await User.findOne({
+  const existUser = await User.findOne({
     where: {
       username: post.username,
     },
   });
 
-  if (!userNameExistFlag) {
+  if (!existUser) {
     resp
       .status(201)
       .send("Couldn't find user based on the username. Please try again.");
   } else {
+    post.UserId = existUser.id;
     const returnResult = await PostTab.create(post);
     resp.status(200).json(returnResult);
   }

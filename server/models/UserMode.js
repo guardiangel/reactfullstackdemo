@@ -16,9 +16,6 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.PostTab, {
       onDelete: "cascade",
     });
-  };
-
-  User.associate = (models) => {
     User.hasMany(models.Like, {
       onDelete: "cascade",
     });

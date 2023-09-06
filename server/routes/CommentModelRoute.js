@@ -16,10 +16,10 @@ router.post("/getCommentsByPostId", validateToken, async (req, resp) => {
 });
 
 router.post("/createComments", validateToken, async (req, resp) => {
-  const comment = req.body;
+  const newAddComment = req.body;
   const username = req.user.username;
-  comment.username = username;
-  const result = await Comment.create(comment);
+  newAddComment.username = username;
+  const result = await Comment.create(newAddComment);
   resp.json(result);
 });
 

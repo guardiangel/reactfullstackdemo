@@ -62,4 +62,19 @@ router.post("/login", async (req, resp) => {
   }
 });
 
+//get user info
+router.get("/getUserProfile/:userId", async (req, resp) => {
+  const userId = req.params.userId;
+
+  const user = await User.findOne({
+    where: {
+      id: userId,
+    },
+    attributes: {
+      exclude: ["password"],
+    },
+  });
+  resp.status(200).send(user);
+});
+
 module.exports = router;

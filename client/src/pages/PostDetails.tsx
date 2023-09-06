@@ -35,7 +35,9 @@ const PostDetails = () => {
     if (!loginState) {
       navigate("/login");
     }
+  }, [loginState, navigate]);
 
+  useEffect(() => {
     axios
       .post(
         "http://localhost:3001/posts/getPostById",
@@ -65,7 +67,6 @@ const PostDetails = () => {
         }
       )
       .then((res) => {
-        console.log(res.data);
         setComments(res.data);
       });
 
@@ -82,7 +83,6 @@ const PostDetails = () => {
       )
       .then((res) => {
         const like = res.data;
-        console.log("like===" + like);
         if (like) {
           setLikeFlag(true);
         }
@@ -91,7 +91,8 @@ const PostDetails = () => {
 
   //Add comments
   const addComment = () => {
-    if (newComment === "") {
+    console.log("postid=" + id);
+    if (!newComment) {
       alert("Please enter comments.");
       return;
     }
