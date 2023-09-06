@@ -13,8 +13,6 @@ const Home = () => {
     (state: LoginState) => state.loginStateObject.loginState
   );
 
-  console.log("loginState=" + loginState);
-
   const dispatch = useDispatch();
 
   const handleLoginOut = () => {

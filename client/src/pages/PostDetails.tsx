@@ -7,8 +7,17 @@ import { useTheme } from "@mui/material";
 import { colorTokens } from "../theme";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { useSelector } from "react-redux";
+import { LoginState } from "../reducers/LoginReducerSlice";
+import { useNavigate } from "react-router-dom";
 
 const PostDetails = () => {
+  const loginState = useSelector(
+    (state: LoginState) => state.loginStateObject.loginState
+  );
+
+  const navigate = useNavigate();
+
   const theme = useTheme();
   const colors = colorTokens(theme.palette.mode);
 
@@ -22,6 +31,11 @@ const PostDetails = () => {
   const commentRef = useRef<any>();
 
   useEffect(() => {
+    //If not log in, return to the login page
+    if (!loginState) {
+      navigate("/login");
+    }
+
     axios
       .post(
         "http://localhost:3001/posts/getPostById",
