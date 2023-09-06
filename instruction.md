@@ -88,7 +88,7 @@ Key point:
 1.  Add sessionStorge to the store.tsx of the client directory. the export the below statement:
     export const persistor = persistStore(store);
 
-        After the user login, we change the unknown requested parameter in the browser, we will be directed to the PageNotFound component, there is a link in the "Page Not Found" component, when we click it, we will come back to the home page, however, the login status will be lost. (I guess the reason is that I changed the parameter, so it equals to use <a> tag outside of the React component.) I change the store.tsx, store the value in the sessionStorage, No matter how to change a requested parameter, we still can get the right login status.<br/>
+        After the user login, we change the unknown requested parameter in the browser, we will be directed to the PageNotFound component, there is a link in the "Page Not Found" component, when we click it, we will come back to the home page, however, the login status will be lost. (I guess the reason is that I changed the parameter, so it equals to use <a> tag outside of the React component.). After changing the store.tsx and storing the value in the sessionStorage, No matter how to change a requested parameter in the browser, we still can get the right login status.<br/>
 
          We can get it from the Application tab in the browser console.<br/>
 
